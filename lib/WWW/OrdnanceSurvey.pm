@@ -16,37 +16,21 @@ our $VERSION = '0.0';
 
 with 'WWW::OrdnanceSurvey::API';
 
+# CONSTANTS
+use constant API_URL_BASE    => 'https://api.ordnancesurvey.co.uk';
+use constant API_URL_VERSION => 'v1';
+
 # ATTRIBUTES
 
-has 'api_key' => (
-    is       => 'ro',
-    required => 1,
-);
+has 'api_key' => ( is => 'ro', required => 1 );
+has 'format'  => ( is => 'ro', default  => 'json' );
 
-has 'api_url' => (
-    is      => 'ro',
-    default => 'https://api.ordnancesurvey.co.uk',
-);
+# PRIVATE ATTRIBUTES
 
-has 'version' => (
-    is      => 'ro',
-    default => 'v1',
-);
-
-has 'agent' => (
-    is      => 'ro',
-    default => sub { LWP::UserAgent->new },
-);
-
-has 'format' => (
-    is      => 'ro',
-    default => 'json',
-);
-
-has 'service' => (
-    is       => 'ro',
-    required => 1,
-);
+has '_service' => ( is => 'ro', required => 1 );
+has '_api_url' => ( is => 'ro', default  => API_URL_BASE );
+has '_version' => ( is => 'ro', default  => API_URL_VERSION );
+has '_agent'   => ( is => 'ro', default  => sub { LWP::UserAgent->new } );
 
 # METHODS
 
@@ -54,19 +38,19 @@ sub perform_request {
     my ( $self, $endpoint, %args ) = @_;
 
     my $uri    = $self->_uri($endpoint);
-    my $api    = $self->api->{ $self->service }->{$endpoint};
+    my $api    = $self->api->{ $self->_service }->{$endpoint};
     my $method = $api->{method};
 
     # set defaults
     $args{format} //= $self->format;
+    $args{key}    //= $self->api_key;
 
     # add query params
-    for ( @{ $api->{qs} } ) {
+    for ( sort @{ $api->{qs} }, 'key' ) {
         $uri->query_param( $_ => $args{$_} ) if defined $args{$_};
     }
 
-    # add api key if not added already
-    $uri->query_param( key => $self->api_key );
+    # add post data
 
     my $request = HTTP::Request->new( $method, $uri );
 
@@ -76,7 +60,7 @@ sub perform_request {
     # }
 
     # make actual request
-    my $response = $self->agent->request($request);
+    my $response = $self->_agent->request($request);
     my $content  = $response->content;
 
     # handle errors
@@ -96,8 +80,8 @@ sub perform_request {
 
 sub _uri {
     my ( $self, $endpoint ) = @_;
-    my $url = sprintf '%s/%s/%s/%s/', $_[0]->api_url, $_[0]->service,
-        $_[0]->version, $endpoint;
+    my $url = sprintf '%s/%s/%s/%s/', $_[0]->_api_url, $_[0]->_service,
+        $_[0]->_version, $endpoint;
     return URI->new($url);
 
 }
