@@ -1,13 +1,16 @@
 package WWW::OrdnanceSurvey::Names;
 
-use Moose;
+use Moo;
 use namespace::autoclean;
 
 extends 'WWW::OrdnanceSurvey';
 
-has '+_service' => ( default => 'opennames' );
-
-sub find    { shift->perform_request( 'find',    @_ ) }
-sub nearest { shift->perform_request( 'nearest', @_ ) }
+has '+service' => ( default => 'opennames' );
 
 1;
+
+=head1 NAME
+
+WWW::OrdnanceSurvey::Names 
+
+=cut

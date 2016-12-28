@@ -1,24 +1,26 @@
 package WWW::OrdnanceSurvey::API;
 
-use Moose::Role;
+use Moo::Role;
 
 my %API = (
 
     # documentation: https://apidocs.os.uk/docs/os-names-overview
     opennames => {
         find => {
+            endpoint => 'find',
             method => 'GET',
             qs =>
                 [ 'query', 'format', 'maxresults', 'offset', 'bounds', 'fq' ],
         },
         nearest => {
+            endpoint => 'nearest',
             method => 'GET',
             qs     => [ 'point', 'radius', 'format' ],
         },
     },
 
     # documentation: https://apidocs.os.uk/docs/os-places-overview
-    openplaces => {
+    places => {
 
         match => {
             method => 'GET',
@@ -83,6 +85,7 @@ my %API = (
         },
 
         polygon => {
+            endpoint => 'addresses/polygon',
             method => 'POST',
             qs     => [
                 'referencepoint', 'maxresults',
@@ -90,7 +93,7 @@ my %API = (
                 'lr',             'fq',
                 'output_srs',     'srs'
             ],
-            body => [ 'type', 'geometry' ],
+            body     => [ 'type', 'geometry' ],
         },
     },
 
