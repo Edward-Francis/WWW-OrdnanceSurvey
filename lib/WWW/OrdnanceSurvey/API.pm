@@ -8,14 +8,14 @@ my %API = (
     opennames => {
         find => {
             endpoint => 'find',
-            method => 'GET',
+            method   => 'GET',
             qs =>
                 [ 'query', 'format', 'maxresults', 'offset', 'bounds', 'fq' ],
         },
         nearest => {
             endpoint => 'nearest',
-            method => 'GET',
-            qs     => [ 'point', 'radius', 'format' ],
+            method   => 'GET',
+            qs       => [ 'point', 'radius', 'format' ],
         },
     },
 
@@ -23,8 +23,9 @@ my %API = (
     places => {
 
         match => {
-            method => 'GET',
-            qs     => [
+            endpoint => 'addresses/match',
+            method   => 'GET',
+            qs       => [
                 'query',      'format',
                 'maxresults', 'offset',
                 'dataset',    'lr',
@@ -34,8 +35,9 @@ my %API = (
         },
 
         find => {
-            method => 'GET',
-            qs     => [
+            endpoint => 'addresses/find',
+            method   => 'GET',
+            qs       => [
                 'query',      'format',
                 'maxresults', 'offset',
                 'dataset',    'lr',
@@ -45,29 +47,33 @@ my %API = (
         },
 
         postcode => {
-            method => 'GET',
-            qs     => [
+            endpoint => 'addresses/postcode',
+            method   => 'GET',
+            qs       => [
                 'postcode', 'format', 'maxresults', 'offset',
                 'dataset',  'lr',     'fq',         'output_srs'
             ],
         },
 
         uprn => {
-            method => 'GET',
+            endpoint => 'addresses/uprn',
+            method   => 'GET',
             qs => [ 'uprn', 'format', 'dataset', 'lr', 'fq', 'output_srs' ],
         },
 
         nearest => {
-            method => 'GET',
-            qs     => [
+            endpoint => 'addresses/nearest',
+            method   => 'GET',
+            qs       => [
                 'point', 'radius', 'format',     'dataset',
                 'lr',    'fq',     'output_srs', 'srs',
             ],
         },
 
         bbox => {
-            method => 'GET',
-            qs     => [
+            endpoint => 'addresses/bbox',
+            method   => 'GET',
+            qs       => [
                 'bbox',    'format', 'maxresults', 'offset',
                 'dataset', 'lr',     'fq',         'output_srs',
                 'srs'
@@ -75,8 +81,9 @@ my %API = (
         },
 
         radius => {
-            method => 'GET',
-            qs     => [
+            endpoint => 'addresses/radius',
+            method   => 'GET',
+            qs       => [
                 'point',      'radius',  'format', 'maxresults',
                 'offset',     'dataset', 'lr',     'fq',
                 'output_srs', 'srs'
@@ -86,14 +93,14 @@ my %API = (
 
         polygon => {
             endpoint => 'addresses/polygon',
-            method => 'POST',
-            qs     => [
+            method   => 'POST',
+            qs       => [
                 'referencepoint', 'maxresults',
                 'dataset',        'offset',
                 'lr',             'fq',
                 'output_srs',     'srs'
             ],
-            body     => [ 'type', 'geometry' ],
+            body => [ 'type', 'geometry' ],
         },
     },
 

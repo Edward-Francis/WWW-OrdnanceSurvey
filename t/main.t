@@ -15,7 +15,7 @@ isa_ok $places, 'WWW::OrdnanceSurvey';
 
 # METHOD TESTS
 can_ok $names,  keys %{ WWW::OrdnanceSurvey::API->api('opennames') };
-can_ok $places, keys %{ WWW::OrdnanceSurvey::API->api('openplaces') };
+can_ok $places, keys %{ WWW::OrdnanceSurvey::API->api('places') };
 
 done_testing;
 
