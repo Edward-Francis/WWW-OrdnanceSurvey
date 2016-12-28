@@ -94,6 +94,20 @@ sub perform_request {
 
 1;
 
-__DATA__
+__END__
 
-=head1
+=pod
+ 
+=head1 NAME
+
+WWW::OrdnanceSurvey
+
+=head1 VERSION
+
+0.1
+
+=head2 SYNOPSIS
+
+=head1 DESCRIPTION
+
+=cut
