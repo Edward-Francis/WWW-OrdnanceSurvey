@@ -37,8 +37,6 @@ sub BUILD {
         __PACKAGE__->meta->add_method(
             $method => sub { shift->perform_request( $method, @_ ) } );
     }
-
-    return 1;
 }
 
 # METHODS
@@ -97,17 +95,43 @@ sub perform_request {
 __END__
 
 =pod
+
+=encoding utf-8
  
 =head1 NAME
 
-WWW::OrdnanceSurvey
-
-=head1 VERSION
-
-0.1
+WWW::OrdnanceSurvey - Ordnance Survey API Implementation
 
 =head2 SYNOPSIS
 
+    # fetch data from Names API service
+    my $names = WWW::OrdnanceSurvey::Names->new( api_key => $api_key );
+    my $results = $names->find( query => 'London' );
+
+    # fetch data from Places API service
+    my $places = WWW::OrdnanceSurvey::Places->new( api_key => $api_key );
+    my $results = $places->match( query => 'SO16' );
+
 =head1 DESCRIPTION
+
+A Perl implementation of the Ordnance Survey API. See L<https://apidocs.os.uk/>
+for full specification and documentation.
+
+=head1 METHODS
+
+As defined by L<https://apidocs.os.uk/docs/os-names-endpoints> and L<https://apidocs.os.uk/docs/os-places-endpoints>
+for Names and Places API respectively.
+
+=head1 AUTHOR
+ 
+Edward Francis, C<edwardafrancis@gmail.com>
+
+=head1 LICENSE AND COPYRIGHT
+ 
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+ 
+See http://dev.perl.org/licenses/ for more information.
 
 =cut
